@@ -1,8 +1,10 @@
 #this a function to make inferences fro the hugging face t5 model api
 import requests
+import os
+AUTH = os.environ['AUTH']
 
 API_URL = "https://api-inference.huggingface.co/models/t5-base"
-headers = {"Authorization": "Bearer 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"}
+headers = {"Authorization": f"Bearer {AUTH}"}
 
 def query(payload):
 	response = requests.post(API_URL, headers=headers, json=payload)
@@ -11,4 +13,4 @@ def query(payload):
 output = query({
 	"inputs": "translate English to French: hello",
 })
-print(output)
+print(output[0]['translation_text'])
