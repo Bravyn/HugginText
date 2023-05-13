@@ -9,8 +9,21 @@ headers = {"Authorization": f"Bearer {AUTH}"}
 def query(payload):
 	response = requests.post(API_URL, headers=headers, json=payload)
 	return response.json()
-	
+
+def get_user_input():
+  return input("\033[34mWhat would you like translated: \n\n\033[0m")
+
+input = get_user_input()
+
+print("\nTranslating to French, this might take some time...\n")
+
 output = query({
-	"inputs": "translate English to French: hello",
+	"inputs": f"translate English to French: {input}",
 })
-print(output[0]['translation_text'])
+
+if output[0]['translation_text'] != KeyError:
+  print(output[0]['translation_text'])
+  print("\n")
+
+else:
+  print("There was a problem getting your translation...")
